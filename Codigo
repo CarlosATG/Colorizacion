@@ -1,0 +1,90 @@
+package grafo;
+
+import java.util.*;
+
+class Grafo {
+    private int V; // Número de vértices
+    private LinkedList<Integer>[] adj; // Lista de adyacencia
+
+    // Constructor
+    Grafo(int v) {
+        V = v;
+        adj = new LinkedList[v];
+        for (int i = 0; i < v; ++i)
+            adj[i] = new LinkedList<>();
+    }
+
+    // Función para agregar una arista al grafo
+    void agregarArista(int v, int w) {
+        adj[v].add(w);
+        adj[w].add(v); // Como el grafo es no dirigido
+    }
+
+    // Método para colorear el grafo
+    void colorear() {
+        int[] resultado = new int[V]; // Almacena el color asignado a cada vértice
+        Arrays.fill(resultado, -1); // Inicializa todos los vértices como no coloreados
+
+        boolean[] disponible = new boolean[V]; // Rastrea los colores disponibles
+
+        // Asigna el primer color al primer vértice
+        resultado[0] = 0;
+
+        // Asigna colores a los demás vértices
+        for (int u = 1; u < V; u++) {
+            Arrays.fill(disponible, true); // Inicialmente, todos los colores están disponibles
+
+            // Marca los colores de los vértices adyacentes como no disponibles
+            for (int i : adj[u]) {
+                if (resultado[i] != -1) {
+                    disponible[resultado[i]] = false;
+                }
+            }
+
+            // Encuentra el primer color disponible
+            int cr;
+            for (cr = 0; cr < V; cr++) {
+                if (disponible[cr]) {
+                    break;
+                }
+            }
+
+            resultado[u] = cr; // Asigna el color encontrado al vértice actual
+        }
+
+        // Imprime el resultado
+        for (int u = 0; u < V; u++) {
+            System.out.println("Vértice " + u + " ---> Color " + resultado[u]);
+        }
+    }
+}
+
+public class ColoreadoDeGrafos {
+    public static void main(String[] args) {
+        Grafo g = new Grafo(13); 
+
+        g.agregarArista(0, 10);
+        g.agregarArista(0, 11);
+        g.agregarArista(0, 12);
+        g.agregarArista(1, 4);
+        g.agregarArista(1, 8);
+        g.agregarArista(1, 9);
+        g.agregarArista(1, 11);
+        g.agregarArista(1, 12);
+        g.agregarArista(2, 4);
+        g.agregarArista(2, 5);
+        g.agregarArista(2, 9);
+        g.agregarArista(2, 12);
+        g.agregarArista(4, 9);
+        g.agregarArista(4, 10);
+        g.agregarArista(4, 11);
+        g.agregarArista(5, 8);
+        g.agregarArista(5, 11);
+        g.agregarArista(8, 10);
+        g.agregarArista(9, 10);
+        g.agregarArista(9, 11);
+
+        System.out.println("Coloreado del grafo:");
+        g.colorear();
+    }
+}
