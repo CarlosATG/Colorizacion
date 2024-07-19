@@ -62,7 +62,7 @@ class Grafo {
 public class ColoreadoDeGrafos {
     public static void main(String[] args) {
         Grafo g = new Grafo(13); 
-
+        // Para el grafo que estamos trabajando el vértice 0 es EA y el número 13 es AD
         g.agregarArista(0, 10);
         g.agregarArista(0, 11);
         g.agregarArista(0, 12);
